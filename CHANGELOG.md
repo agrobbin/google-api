@@ -1,3 +1,3 @@
-## v0.0.1 (TBD) ##
+## v0.0.1.alpha (2012-08-21) ##
 
-* First release.
+* First release. (be careful!)
