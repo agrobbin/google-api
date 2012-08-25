@@ -4,7 +4,7 @@
 require 'google-api/active_record_inclusions'
 
 module GoogleAPI
-  class Railtie < Rails::Railtie
+  class Railtie < ::Rails::Railtie
 
     initializer "google_api.configure_rails_initialization" do |app|
       ActiveRecord::Base.send(:include, ActiveRecordInclusions)

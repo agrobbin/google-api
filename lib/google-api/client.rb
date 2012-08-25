@@ -9,15 +9,19 @@ module GoogleAPI
     def initialize(object)
       @object = object
 
-      raise NoMethodError, "GoogleAPI::Client must be passed an object that is to oauthable. #{object.class.name} is not oauthable." unless object.class.respond_to?(:oauthable)
+      raise NoMethodError, "#{self.class} must be passed an object that is to oauthable. #{object.class.name} is not oauthable." unless object.class.respond_to?(:oauthable)
+      raise ArgumentError, "#{object.class.name} does not appeared to be OAuth2 authenticated. GoogleAPI requires :oauth_access_token, :oauth_request_token, and :oauth_access_token_expires_at to be present." unless object.oauth_hash.values.all?
     end
 
     # Build an AccessToken object from OAuth2. Check if the access token is expired, and if so,
     # refresh it and save the new access token returned from Google.
     def access_token
-      @access_token ||= ::OAuth2::AccessToken.new(client, oauth_hash[:access_token], oauth_hash.except(:access_token))
+      @access_token = ::OAuth2::AccessToken.new(client, object.oauth_access_token,
+        refresh_token: object.oauth_refresh_token,
+        expires_at: object.oauth_access_token_expires_at.to_i
+      )
       if @access_token.expired?
-        puts "Access Token expired, refreshing..."
+        Rails.logger.info "Access Token expired, refreshing..." if defined?(::Rails)
         @access_token = @access_token.refresh!
         object.update_access_token!(@access_token.token)
       end
@@ -25,21 +29,8 @@ module GoogleAPI
       @access_token
     end
 
-    # Build the oauth_hash used to build the AccessToken object above. If any of the values
-    # are nil?, we raise an error and tell the user.
-    def oauth_hash
-      unless @oauth_hash
-        hash = object.oauth_hash.dup
-        hash[:expires_at] = hash[:expires_at].to_i if hash[:expires_at].present?
-        raise ArgumentError, "#{object.class.name} does not appeared to be OAuth2 authenticated. GoogleAPI requires :oauth_access_token, :oauth_request_token, and :oauth_access_token_expires_at to be present." unless hash.values.all?
-      end
-
-      @oauth_hash ||= hash
-    end
-
     # Build the OAuth2::Client object to be used when building an AccessToken.
     def client
-      puts "Creating the OAuth2::Client object..." unless @client
       @client ||= ::OAuth2::Client.new(GoogleAPI.client_id, GoogleAPI.client_secret,
         site: 'https://accounts.google.com',
         token_url: '/o/oauth2/token',

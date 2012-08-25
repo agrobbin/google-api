@@ -1,12 +1,15 @@
+# For Google's API reference:
+# https://developers.google.com/google-apps/calendar/v3/reference/
+
 module GoogleAPI
   class Calendar < API
 
-    ENDPOINT = 'https://www.googleapis.com/calendar/v3'
+    endpoint 'https://www.googleapis.com/calendar/v3'
+    data_format :json
 
     # Fetch all calendars for a particular user, returning an array of calendar hashes.
     def all
-      response = get('/users/me/calendarList')
-      response['items']
+      get('/users/me/calendarList')
     end
 
     # Fetch a particular calendar based on the ID, returning a calendar hash.
@@ -16,7 +19,7 @@ module GoogleAPI
 
     # Delegates to #find, checking if the particular calendar exists.
     def exists?(id)
-      find(id)['kind'].present?
+      find(id)['error'].blank?
     end
 
     # Create a calendar for a particular user, returning a calendar hash.

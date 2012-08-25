@@ -1,24 +1,24 @@
 module GoogleAPI
   class API
 
-    FORMAT = :json
-
-    attr_reader :access_token
+    attr_reader :access_token, :base_url
 
     def initialize(access_token)
       @access_token = access_token
+      @data_format ||= :json
+      raise ArgumentError, "#{self.class}'s data_format has been set to :#{self.class.data_format}, which is not :json or :xml" unless [:json, :xml].include?(self.class.data_format)
     end
 
     # The really important part of this parent class. The headers are injected here,
-    # and the full URL is built from the ENDPOINT constant and the value passed thru
-    # the URL parameter.
+    # and the full URL is built from the endpoint class method or base URL
+    # and the value passed thru the URL parameter.
     #
     # The response is then returned, and appropriately parsed.
     def request(method, url = nil, args = {})
       args[:headers] = headers.merge(args[:headers] || {})
-      args[:body] = args[:body].send("to_#{format}") if args[:body].is_a?(Hash)
+      args[:body] = args[:body].send("to_#{self.class.data_format}") if args[:body].is_a?(Hash)
 
-      url.prepend(self.class::ENDPOINT) unless URI(url).scheme
+      url.prepend(build_endpoint) unless URI(url).scheme
 
       # Adopt Google's API erorr handling recommendation here:
       # https://developers.google.com/drive/manage-uploads#exp-backoff
@@ -28,26 +28,21 @@ module GoogleAPI
       # until either we receive a successful response, or we run out of attempts.
       # If the Retry-After header is in the error response, we use whichever happens to be
       # greater, our calculated wait time, or the value in the Retry-After header.
+      #
+      # If development_mode is set to true, we only run the request once. This speeds up
+      # development for those using this gem.
       attempt = 0
-      while attempt < 5
+      max_attempts = GoogleAPI.development_mode ? 1 : 5
+      while attempt < max_attempts
         response = access_token.send(method, url, args)
-        break unless response.status >= 500
         seconds_to_wait = [((2 ** attempt) + rand), response.headers['Retry-After'].to_i].max
         attempt += 1
-        puts "#{attempt.ordinalize} request attempt failed. Trying again in #{seconds_to_wait} seconds..."
+        break if response.status < 400 || attempt == max_attempts
+        Rails.logger.error "#{attempt.ordinalize} request attempt failed. Trying again in #{seconds_to_wait} seconds..." if defined?(::Rails)
         sleep seconds_to_wait
       end
 
-      if response.body.present?
-        case format
-        when :json
-          JSON.parse(response.body)
-        when :xml
-          Nokogiri::XML(response.body)
-        end
-      else
-        response
-      end
+      response.parsed
     end
 
     # Shortcut methods to easily execute a HTTP request with any of the below HTTP verbs.
@@ -71,28 +66,38 @@ module GoogleAPI
       put(response.headers['Location'], body: file, headers: {'Content-Type' => object[:mimeType], 'Content-Length' => file.bytesize.to_s})
     end
 
+    class << self
+
+      # This class-level method is available to easily add a sub-API of sorts to an API. Look at
+      # GoogleAPI::Drive for an example.
+      def inherited_apis(*apis)
+        apis.each do |api|
+          define_method api do |id|
+            "#{self.class}::#{api.capitalize}".constantize.new(access_token, id)
+          end
+        end
+      end
+
+      # Build the API setting methods for easy configuration of an API's connection settings.
+      [:data_format, :endpoint, :version].each do |setting|
+        define_method setting do |value = nil|
+          if value.nil?
+            instance_variable_get("@#{setting}")
+          else
+            instance_variable_set("@#{setting}", value)
+          end
+        end
+      end
+
+    end
+
     private
-      # Each class that inherits from this API class can have GDATA_VERSION set as a constant.
-      # This is then passed on to each request if present to dictate which version of Google's
-      # API we intend to use.
-      def version
-        self.class::GDATA_VERSION rescue nil
-      end
-
-      # By default we use JSON as the format we pass to Google and get back from Google. To override
-      # this default setting, each class that inherits from this API class can have FORMAT set as
-      # a constant. The only other possible value can be XML.
-      def format
-        raise ArgumentError, "#{self.class} has FORMAT set to #{self.class::FORMAT}, which is not :json or :xml" unless [:json, :xml].include?(self.class::FORMAT)
-        self.class::FORMAT
-      end
-
-      # Build the header hash for the request. If #version is set, we pass that as GData-Version,
-      # and if #format is set, we pass that as Content-Type.
+      # Build the header hash for the request. If the class's version is set, we pass that as GData-Version,
+      # and if the class's data_format is set, we pass that as Content-Type.
       def headers
         headers = {}
-        headers['GData-Version'] = version if version
-        headers['Content-Type'] = case format
+        headers['GData-Version'] = self.class.version if self.class.version
+        headers['Content-Type'] = case self.class.data_format
         when :json
           'application/json'
         when :xml
@@ -101,8 +106,15 @@ module GoogleAPI
         return headers
       end
 
+      # Choose the endpoing URL. If a base_url is set, use that, otherwise, fall back to the endpoint setting.
+      def build_endpoint
+        base_url || self.class.endpoint
+      end
+
+      # Create the upload URL for any particular API's upload mechanism from the endpoint/base URL, appending and
+      # prepending the correct URL parts.
       def build_upload_url(url)
-        path = URI(self.class::ENDPOINT).path
+        path = URI(build_endpoint).path
         "https://www.googleapis.com/upload#{path}#{url}?uploadType=resumable"
       end
 

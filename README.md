@@ -1,4 +1,4 @@
-**This gem is not yet released! Proceed at your own risk...**
+**This gem is in its infancy! Proceed at your own risk...**
 
 Google API
 ===================
@@ -31,7 +31,7 @@ As a starting point, we recommend using Omniauth for most authentication with Ru
 Usage
 -------
 
-This gem couldn't be easier to set up. Once you have a Client ID and Secret from Google (check out the [Wiki](https://github.com/agrobbin/google-api/wiki/Getting-a-Client-ID-and-Secret-from-Google) for instructions on how to get these), you just need to add an initializer to your Rails application that looks like this:
+This gem couldn't be easier to set up. Once you have a Client ID and Secret from Google (check out the [Wiki](https://github.com/agrobbin/google-api/wiki/Getting-a-Client-ID-and-Secret-from-Google) for instructions on how to get these), you just need to add an initializer to your application that looks like this:
 
 ```ruby
 GoogleAPI.configure do |config|
@@ -69,6 +69,11 @@ client.drive.all
 ```
 
 This will fetch all files and folders in the user's Google Drive and return them in an array of hashes.
+
+I need to use an API that is not yet included
+-------
+
+Take a look at our [Wiki](https://github.com/agrobbin/google-api/wiki/Adding-a-New-Google-API) page on adding an API to this gem. We have made it as simple as possible, and the more coverage of Google's systems we have, the better!
 
 ## Contributing
 
