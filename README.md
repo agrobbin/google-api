@@ -1,12 +1,10 @@
 **This gem is in its infancy! Proceed at your own risk...**
 
-Google API
-===================
+# Google API
 
 A simple but powerful ruby API wrapper for Google's services.
 
-Installation
--------
+## Installation
 
 Add this line to your application's Gemfile:
 
@@ -21,15 +19,13 @@ Or install it yourself as:
     $ gem install google-api
 
 
-Before Using this Gem
--------
+## Before Using this Gem
 
 Google API depends on you to authenticate each user with Google via OAuth2. We don't really care how you get authenticated, but you must request access to a User's Google account and save the Refresh Token, Access Token, and Access Token Expiration Date.
 
 As a starting point, we recommend using Omniauth for most authentication with Ruby. It is a great gem, and integrates seemlessly with most SSO sites, including Google. Check out the [Wiki](https://github.com/agrobbin/google-api/wiki/Using-Omniauth-for-Authentication) for more information.
 
-Usage
--------
+## Usage
 
 This gem couldn't be easier to set up. Once you have a Client ID and Secret from Google (check out the [Wiki](https://github.com/agrobbin/google-api/wiki/Getting-a-Client-ID-and-Secret-from-Google) for instructions on how to get these), you just need to add an initializer to your application that looks like this:
 
@@ -64,14 +60,12 @@ Once you have set that up, making a request to the Google API is as simple as:
 
 ```ruby
 user = User.find(1)
-client = GoogleAPI::Client.new(user)
-client.drive.all
+user.google.drive.all
 ```
 
 This will fetch all files and folders in the user's Google Drive and return them in an array of hashes.
 
-I need to use an API that is not yet included
--------
+## I need to use an API that is not yet included
 
 Take a look at our [Wiki](https://github.com/agrobbin/google-api/wiki/Adding-a-New-Google-API) page on adding an API to this gem. We have made it as simple as possible, and the more coverage of Google's systems we have, the better!
 
