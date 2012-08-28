@@ -21,7 +21,7 @@ module GoogleAPI
         expires_at: object.oauth_access_token_expires_at.to_i
       )
       if @access_token.expired?
-        Rails.logger.info "Access Token expired, refreshing..." if defined?(::Rails)
+        GoogleAPI.logger.info "Access Token expired for #{object.class.name}(#{object.id}), refreshing..." if defined?(::Rails)
         @access_token = @access_token.refresh!
         object.update_access_token!(@access_token.token)
       end

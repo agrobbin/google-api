@@ -38,7 +38,7 @@ module GoogleAPI
         seconds_to_wait = [((2 ** attempt) + rand), response.headers['Retry-After'].to_i].max
         attempt += 1
         break if response.status < 400 || attempt == max_attempts
-        Rails.logger.error "#{attempt.ordinalize} request attempt failed. Trying again in #{seconds_to_wait} seconds..." if defined?(::Rails)
+        GoogleAPI.logger.error "#{attempt.ordinalize} request attempt to #{url} failed for. Trying again in #{seconds_to_wait} seconds..." if defined?(::Rails)
         sleep seconds_to_wait
       end
 

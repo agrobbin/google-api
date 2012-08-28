@@ -1,5 +1,6 @@
 ## v0.0.1.beta (TBD)
 
+* Add logger configuration.
 * Add the #google method to an oauthable object.
 * Refactored some settings into class methods for each API class.
 * Built out more of the Drive API, including the Permissions sub-API.
