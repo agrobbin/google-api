@@ -32,16 +32,5 @@ module GoogleAPI
       delete("/calendars/#{id}")
     end
 
-    private
-      def parse_calendar(response)
-        {
-          id: response['selfLink'],
-          title: response['title'],
-          updated_at: DateTime.parse(response['updated']),
-          details: response['details'],
-          eventFeed: response['eventFeedLink']
-        }
-      end
-
   end
 end

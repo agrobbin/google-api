@@ -54,7 +54,7 @@ module GoogleAPI
     end
 
     def update(id, object)
-      patch("/files/#{object_id}", body: object)
+      patch("/files/#{id}", body: object)
     end
 
     # Destroy a particular file/folder based on the ID, returning true if successful.
@@ -74,23 +74,6 @@ module GoogleAPI
     def about
       get('/about')
     end
-
-    private
-      def parse_document(response)
-        {
-          id: response.at_css('link[rel=self]')['href'],
-          title: response.at_css('title').text,
-          updated_at: DateTime.parse(response.at_css('updated').text)
-        }
-      end
-
-      def parse_folder(response)
-        {
-          id: response.at_css('content')['src'].sub('/contents', ''), # this was the cleanest way to pull the Folder ID URL
-          title: response.at_css('title').text,
-          updated_at: DateTime.parse(response.at_css('updated').text)
-        }
-      end
 
   end
 end
