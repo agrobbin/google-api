@@ -125,7 +125,7 @@ module GoogleAPI
             when 'query'
               query_params << "#{param}=#{options.delete(param)}" if options[param]
             end
-          end
+          end if api_method['parameters']
           url += "?#{query_params.join('&')}" if query_params.length > 0
         end
 
