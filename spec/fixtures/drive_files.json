@@ -1,0 +1,51 @@
+{
+ "kind": "drive#fileList",
+ "etag": "\"j-adummyetag/pIy649ByRBzgnLlQWUq3mFq4jbc\"",
+ "selfLink": "https://www.googleapis.com/drive/v2/files",
+ "items": [
+  {
+   "kind": "drive#file",
+   "id": "adummyidnumber",
+   "etag": "\"j-adummyetag/MTM0NjIwMjM0MzYzOQ\"",
+   "selfLink": "https://www.googleapis.com/drive/v2/files/adummyidnumber",
+   "alternateLink": "https://docs.google.com/a/bryant.edu/folder/d/adummyidnumber/edit",
+   "title": "Test Folder",
+   "mimeType": "application/vnd.google-apps.folder",
+   "labels": {
+    "starred": false,
+    "hidden": false,
+    "trashed": false,
+    "restricted": false,
+    "viewed": true
+   },
+   "createdDate": "2012-08-29T01:05:43.651Z",
+   "modifiedDate": "2012-08-29T01:05:43.639Z",
+   "modifiedByMeDate": "2012-08-29T01:05:43.639Z",
+   "lastViewedByMeDate": "2012-08-29T01:05:43.639Z",
+   "parents": [
+    {
+     "kind": "drive#parentReference",
+     "id": "adummyparentidnumber",
+     "selfLink": "https://www.googleapis.com/drive/v2/files/adummyidnumber/parents/adummyparentidnumber",
+     "parentLink": "https://www.googleapis.com/drive/v2/files/adummyparentidnumber",
+     "isRoot": true
+    }
+   ],
+   "userPermission": {
+    "kind": "drive#permission",
+    "etag": "\"j-adummyetag/JxXBnYVV_rnFy38Ll-sTHyzNvF8\"",
+    "id": "me",
+    "selfLink": "https://www.googleapis.com/drive/v2/files/adummyidnumber/permissions/me",
+    "role": "owner",
+    "type": "user"
+   },
+   "quotaBytesUsed": "0",
+   "ownerNames": [
+    "Alexander Robbin"
+   ],
+   "lastModifyingUserName": "Alexander Robbin",
+   "editable": true,
+   "writersCanShare": true
+  }
+ ]
+}

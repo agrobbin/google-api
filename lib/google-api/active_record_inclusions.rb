@@ -6,7 +6,6 @@ module GoogleAPI
 
     def self.included(base)
       base.extend ClassMethods
-      base.send :include, InstanceMethods
       base.send :include, Migrations
     end
 
@@ -21,20 +20,15 @@ module GoogleAPI
           }
         end
 
-      end
+        define_method :update_access_token! do |access_token|
+          self.oauth_access_token = access_token
+          self.oauth_access_token_expires_at = 59.minutes.from_now
+          self.save
+        end
 
-    end
-
-    module InstanceMethods
-
-      def update_access_token!(access_token)
-        self.oauth_access_token = access_token
-        self.oauth_access_token_expires_at = 59.minutes.from_now
-        self.save
-      end
-
-      def google
-        GoogleAPI::Client.new(self)
+        define_method :google do
+          GoogleAPI::Client.new(self)
+        end
       end
 
     end

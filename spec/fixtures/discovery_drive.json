@@ -1,0 +1,22 @@
+{
+ "kind": "discovery#directoryList",
+ "discoveryVersion": "v1",
+ "items": [
+  {
+   "kind": "discovery#directoryItem",
+   "id": "drive:v2",
+   "name": "drive",
+   "version": "v2",
+   "title": "Drive API",
+   "description": "The API to interact with Drive.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/drive/v2/rest",
+   "discoveryLink": "./apis/drive/v2/rest",
+   "icons": {
+    "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
+    "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
+   },
+   "documentationLink": "https://developers.google.com/drive/",
+   "preferred": true
+  }
+ ]
+}

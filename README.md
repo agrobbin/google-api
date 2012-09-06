@@ -60,14 +60,19 @@ Once you have set that up, making a request to the Google API is as simple as:
 
 ```ruby
 user = User.find(1)
-user.google.drive.all
+user.google.drive.files.list
 ```
 
 This will fetch all files and folders in the user's Google Drive and return them in an array of hashes.
 
+## What Google APIs can this gem be used for?
+
+* Calendar
+* Drive
+
 ## I need to use an API that is not yet included
 
-Take a look at our [Wiki](https://github.com/agrobbin/google-api/wiki/Adding-a-New-Google-API) page on adding an API to this gem. We have made it as simple as possible, and the more coverage of Google's systems we have, the better!
+Open an issue, and we will do our best to integrate and fully test the API you need. Or, you can submit a pull request with the necessary updates!
 
 ## Contributing
 

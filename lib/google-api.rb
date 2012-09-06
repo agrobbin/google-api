@@ -1,8 +1,7 @@
+require 'mime/types'
+require 'oauth2'
 require 'google-api/oauth2'
 require 'google-api/api'
-require 'google-api/api/calendar'
-require 'google-api/api/drive'
-require 'google-api/api/drive/permission'
 require 'google-api/client'
 if defined?(::Rails)
   require 'google-api/railtie'
@@ -27,7 +26,7 @@ module GoogleAPI
     def configure
       yield self
 
-      raise ArgumentError, "GoogleAPI requires both a :client_id and :client_secret configuration option to be set." if client_id.blank? || client_secret.blank?
+      raise ArgumentError, "GoogleAPI requires both a :client_id and :client_secret configuration option to be set." unless [client_id, client_secret].all?
 
       @development_mode ||= false
       @logger ||= defined?(::Rails) ? Rails.logger : stdout_logger
@@ -35,10 +34,26 @@ module GoogleAPI
       self
     end
 
+    # An internally used hash to cache the discovered API responses.
+    # Keys could be 'drive', 'calendar', 'contacts', etc.
+    # Values will be a parsed JSON hash.
+    def discovered_apis
+      @discovered_apis ||= {}
+    end
+
+    # The default logger for this API. When we aren't within a Rails app,
+    # we will output log messages to STDOUT.
     def stdout_logger
       logger = Logger.new(STDOUT)
       logger.progname = "google-api"
       logger
+    end
+
+    # Used primarily within the test suite to reset our GoogleAPI environment for each test.
+    def reset_environment!
+      @development_mode = false
+      @logger = nil
+      @discovered_apis = {}
     end
 
   end
