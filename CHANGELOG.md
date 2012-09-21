@@ -1,4 +1,4 @@
-## v0.0.1.rc1 (TBD)
+## v0.0.1.rc1 (2012-09-20)
 
 * Add OAuth2 token encryption.
 
