@@ -66,12 +66,12 @@ user.google.drive.files.list
 
 This will fetch all files and folders in the user's Google Drive and return them in an array of hashes.
 
-## What Google APIs has this gem be tested against?
+## What Google APIs has this gem been tested against?
 
 * Calendar
 * Drive
 
-## I need to use an API that is not yet tested
+## Help! I need to use an API that is not yet tested
 
 Open an issue, and we will do our best to fully test the API you need. Or, you can submit a pull request with any necessary updates!
 
