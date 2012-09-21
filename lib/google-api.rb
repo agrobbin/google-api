@@ -17,7 +17,7 @@ module GoogleAPI
   # https://github.com/sferik/twitter/blob/v3.6.0/lib/twitter/configurable.rb
   class << self
 
-    attr_accessor :client_id, :client_secret, :development_mode, :logger
+    attr_accessor :client_id, :client_secret, :encryption_key, :development_mode, :logger
 
     # Configuration options:
     #
@@ -26,7 +26,7 @@ module GoogleAPI
     def configure
       yield self
 
-      raise ArgumentError, "GoogleAPI requires both a :client_id and :client_secret configuration option to be set." unless [client_id, client_secret].all?
+      raise ArgumentError, "GoogleAPI requires both a :client_id and :client_secret configuration option to be set." unless [client_id, client_secret, encryption_key].all?
 
       @development_mode ||= false
       @logger ||= defined?(::Rails) ? Rails.logger : stdout_logger
@@ -54,6 +54,14 @@ module GoogleAPI
       @development_mode = false
       @logger = nil
       @discovered_apis = {}
+    end
+
+    def encrypt!(string)
+      Base64.encode64("#{string}#{encryption_key}")
+    end
+
+    def decrypt!(string)
+      Base64.decode64(string).sub(/#{Regexp.escape(encryption_key)}$/, '')
     end
 
   end

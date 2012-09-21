@@ -14,14 +14,14 @@ module GoogleAPI
       def oauthable
         define_method :oauth_hash do
           {
-            access_token: oauth_access_token,
-            refresh_token: oauth_refresh_token,
+            access_token: GoogleAPI.decrypt!(oauth_access_token),
+            refresh_token: GoogleAPI.decrypt!(oauth_refresh_token),
             expires_at: oauth_access_token_expires_at
           }
         end
 
         define_method :update_access_token! do |access_token|
-          self.oauth_access_token = access_token
+          self.oauth_access_token = GoogleAPI.encrypt!(access_token)
           self.oauth_access_token_expires_at = 59.minutes.from_now
           self.save
         end

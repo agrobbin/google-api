@@ -9,6 +9,7 @@ describe GoogleAPI do
         GoogleAPI.configure do |config|
           config.client_id = nil
           config.client_secret = 'test secret'
+          config.encryption_key = 'encryption key'
         end
       }.to raise_error(ArgumentError)
     end
@@ -18,15 +19,27 @@ describe GoogleAPI do
         GoogleAPI.configure do |config|
           config.client_id = 'test id'
           config.client_secret = nil
+          config.encryption_key = 'encryption key'
         end
       }.to raise_error(ArgumentError)
     end
 
-    it "should raise an error when both the CLIENT ID and SECRET are blank" do
+    it "should raise an error when the ENCRYPTION KEY is blank" do
+      expect {
+        GoogleAPI.configure do |config|
+          config.client_id = 'test id'
+          config.client_secret = 'test secret'
+          config.encryption_key = nil
+        end
+      }.to raise_error(ArgumentError)
+    end
+
+    it "should raise an error when CLIENT ID, CLIENT SECRET, and ENCRYPTION KEY are blank" do
       expect {
         GoogleAPI.configure do |config|
           config.client_id = nil
           config.client_secret = nil
+          config.encryption_key = nil
         end
       }.to raise_error(ArgumentError)
     end
@@ -35,6 +48,7 @@ describe GoogleAPI do
       GoogleAPI.configure do |config|
         config.client_id = 'test id'
         config.client_secret = 'test secret'
+        config.encryption_key = 'encryption key'
       end
 
       GoogleAPI.development_mode.should be_false
@@ -44,6 +58,7 @@ describe GoogleAPI do
       GoogleAPI.configure do |config|
         config.client_id = 'test id'
         config.client_secret = 'test secret'
+        config.encryption_key = 'encryption key'
         config.development_mode = true
       end
 
@@ -59,6 +74,7 @@ describe GoogleAPI do
       GoogleAPI.configure do |config|
         config.client_id = 'test id'
         config.client_secret = 'test secret'
+        config.encryption_key = 'encryption key'
       end
 
     end
@@ -69,6 +85,7 @@ describe GoogleAPI do
       GoogleAPI.configure do |config|
         config.client_id = 'test id'
         config.client_secret = 'test secret'
+        config.encryption_key = 'encryption key'
       end
     end
 
@@ -95,6 +112,34 @@ describe GoogleAPI do
     it "should create a new Logger object" do
       logger = GoogleAPI.stdout_logger
       logger.should be_an_instance_of(Logger)
+    end
+
+  end
+
+  describe "#encrypt!" do
+
+    it "should return an encrypted version of the string" do
+      GoogleAPI.configure do |config|
+        config.client_id = 'test id'
+        config.client_secret = 'test secret'
+        config.encryption_key = 'encryption key'
+      end
+
+      GoogleAPI.encrypt!('test').should == "dGVzdGVuY3J5cHRpb24ga2V5\n"
+    end
+
+  end
+
+  describe "#decrypt!" do
+
+    it "should return an decrypted version of the string" do
+      GoogleAPI.configure do |config|
+        config.client_id = 'test id'
+        config.client_secret = 'test secret'
+        config.encryption_key = 'encryption key'
+      end
+
+      GoogleAPI.decrypt!("dGVzdGVuY3J5cHRpb24ga2V5\n").should == 'test'
     end
 
   end

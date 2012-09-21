@@ -20,6 +20,7 @@ describe GoogleAPI::API do
     GoogleAPI.configure do |config|
       config.client_id = 'test id'
       config.client_secret = 'test secret'
+      config.encryption_key = 'encryption key'
     end
     object.authenticated = true
   end

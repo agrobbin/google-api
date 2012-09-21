@@ -1,3 +1,7 @@
+## v0.0.1.rc1 (TBD)
+
+* Add OAuth2 token encryption.
+
 ## v0.0.1.beta (2012-09-05)
 
 * Full test suite for all classes and modules.

@@ -8,6 +8,7 @@ describe GoogleAPI::Client do
     GoogleAPI.configure do |config|
       config.client_id = 'test id'
       config.client_secret = 'test secret'
+      config.encryption_key = 'encryption key'
     end
     object.authenticated = true
     client.client.connection = TEST_CONNECTION

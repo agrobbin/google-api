@@ -32,7 +32,8 @@ This gem couldn't be easier to set up. Once you have a Client ID and Secret from
 ```ruby
 GoogleAPI.configure do |config|
   config.client_id = '[CLIENT ID]'
-  config.client_secret = '[Client SECRET]'
+  config.client_secret = '[CLIENT SECRET]'
+  config.encryption_key = '[ENCRYPTION KEY]'
 end
 ```
 
@@ -65,14 +66,14 @@ user.google.drive.files.list
 
 This will fetch all files and folders in the user's Google Drive and return them in an array of hashes.
 
-## What Google APIs can this gem be used for?
+## What Google APIs has this gem be tested against?
 
 * Calendar
 * Drive
 
-## I need to use an API that is not yet included
+## I need to use an API that is not yet tested
 
-Open an issue, and we will do our best to integrate and fully test the API you need. Or, you can submit a pull request with the necessary updates!
+Open an issue, and we will do our best to fully test the API you need. Or, you can submit a pull request with any necessary updates!
 
 ## Contributing
 
