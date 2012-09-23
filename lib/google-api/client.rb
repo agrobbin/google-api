@@ -23,7 +23,7 @@ module GoogleAPI
       if @access_token.expired?
         GoogleAPI.logger.info "Access Token expired for #{object.class.name}(#{object.id}), refreshing..."
         @access_token = @access_token.refresh!
-        object.update_access_token!(@access_token.token)
+        object.update_oauth!(@access_token.token)
       end
 
       @access_token

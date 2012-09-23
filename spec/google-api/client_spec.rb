@@ -54,7 +54,7 @@ describe GoogleAPI::Client do
       end
 
       it "should update the object's stored OAuth information" do
-        object.should_receive(:update_access_token!)
+        object.should_receive(:update_oauth!)
         client.access_token
       end
 

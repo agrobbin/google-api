@@ -18,7 +18,7 @@ class User
     }
   end
 
-  def update_access_token!(access_token)
+  def update_oauth!(access_token, refresh_token = nil, additional_attrs = {})
   end
 
   def google

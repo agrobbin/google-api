@@ -1,3 +1,7 @@
+## v0.0.1.rc2 (TBD)
+
+* Generalize #update_oauth! method for an oauthable ActiveRecord object. See active_record_inclusions.rb for more.
+
 ## v0.0.1.rc1 (2012-09-20)
 
 * Add OAuth2 token encryption.
