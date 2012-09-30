@@ -28,7 +28,7 @@ module GoogleAPI
             oauth_access_token: GoogleAPI.encrypt!(access_token),
             oauth_access_token_expires_at: 59.minutes.from_now # it's actually an hour from now, but just to make sure we don't overlap at all, let's set it to 59 minutes
           }.merge(additional_attrs)
-          attrs[:refresh_token] = GoogleAPI.encrypt!(refresh_token) if refresh_token
+          attrs[:oauth_refresh_token] = GoogleAPI.encrypt!(refresh_token) if refresh_token
           update_attributes(attrs)
         end
 
