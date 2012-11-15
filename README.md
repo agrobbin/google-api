@@ -1,5 +1,3 @@
-**This gem is in its infancy! Proceed at your own risk...**
-
 # Google API
 
 [![Build Status](https://secure.travis-ci.org/agrobbin/google-api.png?branch=master)](https://travis-ci.org/agrobbin/google-api) [![Dependency Status](https://gemnasium.com/agrobbin/google-api.png)](https://gemnasium.com/agrobbin/google-api)
