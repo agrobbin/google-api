@@ -2,6 +2,8 @@
 
 # Google API
 
+[![Build Status](https://secure.travis-ci.org/agrobbin/google-api.png?branch=master)](https://travis-ci.org/agrobbin/google-api) [![Dependency Status](https://gemnasium.com/agrobbin/google-api.png)](https://gemnasium.com/agrobbin/google-api)
+
 A simple but powerful ruby API wrapper for Google's services.
 
 ## Installation
