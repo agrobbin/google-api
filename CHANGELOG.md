@@ -1,4 +1,4 @@
-## v0.0.1.rc2 (TBD)
+## v0.1.0 (2012-11-14)
 
 * Generalize #update_oauth! method for an oauthable ActiveRecord object. See active_record_inclusions.rb for more.
 
