@@ -1,4 +1,4 @@
-## v0.2.0 (TBD)
+## v0.2.0 (2012-11-24)
 
 * Rewrite token encryption to use OpenSSL's Cipher. (NOTE: This is a non-backward compatible change!)
 
