@@ -14,8 +14,8 @@ module GoogleAPI
       def oauthable
         define_method :oauth_hash do
           {
-            access_token: GoogleAPI.decrypt!(oauth_access_token),
-            refresh_token: GoogleAPI.decrypt!(oauth_refresh_token),
+            access_token: GoogleAPI::Encrypter.decrypt!(oauth_access_token),
+            refresh_token: GoogleAPI::Encrypter.decrypt!(oauth_refresh_token),
             expires_at: oauth_access_token_expires_at
           }
         end
@@ -25,10 +25,10 @@ module GoogleAPI
         # that you want to update on the object can be passed as a final parameter.
         define_method :update_oauth! do |access_token, refresh_token = nil, additional_attrs = {}|
           attrs = {
-            oauth_access_token: GoogleAPI.encrypt!(access_token),
+            oauth_access_token: GoogleAPI::Encrypter.encrypt!(access_token),
             oauth_access_token_expires_at: 59.minutes.from_now # it's actually an hour from now, but just to make sure we don't overlap at all, let's set it to 59 minutes
           }.merge(additional_attrs)
-          attrs[:oauth_refresh_token] = GoogleAPI.encrypt!(refresh_token) if refresh_token
+          attrs[:oauth_refresh_token] = GoogleAPI::Encrypter.encrypt!(refresh_token) if refresh_token
           update_attributes(attrs)
         end
 

@@ -1,3 +1,7 @@
+## v0.2.0 (TBD)
+
+* Rewrite token encryption to use OpenSSL's Cipher. (NOTE: This is a non-backward compatible change!)
+
 ## v0.1.0 (2012-11-14)
 
 * Generalize #update_oauth! method for an oauthable ActiveRecord object. See active_record_inclusions.rb for more.

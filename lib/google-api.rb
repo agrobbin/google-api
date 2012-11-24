@@ -3,6 +3,7 @@ require 'oauth2'
 require 'google-api/oauth2'
 require 'google-api/api'
 require 'google-api/client'
+require 'google-api/encrypter'
 if defined?(::Rails)
   require 'google-api/railtie'
 else
@@ -54,14 +55,6 @@ module GoogleAPI
       @development_mode = false
       @logger = nil
       @discovered_apis = {}
-    end
-
-    def encrypt!(string)
-      Base64.encode64("#{string}#{encryption_key}")
-    end
-
-    def decrypt!(string)
-      Base64.decode64(string).sub(/#{Regexp.escape(encryption_key)}$/, '')
     end
 
   end

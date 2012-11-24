@@ -116,32 +116,4 @@ describe GoogleAPI do
 
   end
 
-  describe "#encrypt!" do
-
-    it "should return an encrypted version of the string" do
-      GoogleAPI.configure do |config|
-        config.client_id = 'test id'
-        config.client_secret = 'test secret'
-        config.encryption_key = 'encryption key'
-      end
-
-      GoogleAPI.encrypt!('test').should == "dGVzdGVuY3J5cHRpb24ga2V5\n"
-    end
-
-  end
-
-  describe "#decrypt!" do
-
-    it "should return an decrypted version of the string" do
-      GoogleAPI.configure do |config|
-        config.client_id = 'test id'
-        config.client_secret = 'test secret'
-        config.encryption_key = 'encryption key'
-      end
-
-      GoogleAPI.decrypt!("dGVzdGVuY3J5cHRpb24ga2V5\n").should == 'test'
-    end
-
-  end
-
 end
