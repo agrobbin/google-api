@@ -4,11 +4,11 @@ module GoogleAPI
     class << self
 
       def encrypt!(value)
-        crypt(:encrypt, value)
+        Base64.strict_encode64(crypt(:encrypt, value))
       end
 
       def decrypt!(value)
-        crypt(:decrypt, value)
+        crypt(:decrypt, Base64.strict_decode64(value))
       end
 
       protected

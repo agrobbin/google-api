@@ -13,7 +13,7 @@ describe GoogleAPI::Encrypter do
   describe "#encrypt!" do
 
     it "should return an encrypted version of the string" do
-      GoogleAPI::Encrypter.encrypt!('test').should == "0\xC2\xF3y\b\xA00\xB1\x9C\xBD;\xC7s61\x8E"
+      GoogleAPI::Encrypter.encrypt!('test').should == "MMLzeQigMLGcvTvHczYxjg=="
     end
 
   end
@@ -21,7 +21,7 @@ describe GoogleAPI::Encrypter do
   describe "#decrypt!" do
 
     it "should return an decrypted version of the string" do
-      GoogleAPI::Encrypter.decrypt!("0\xC2\xF3y\b\xA00\xB1\x9C\xBD;\xC7s61\x8E").should == 'test'
+      GoogleAPI::Encrypter.decrypt!("MMLzeQigMLGcvTvHczYxjg==").should == 'test'
     end
 
   end

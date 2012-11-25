@@ -1,3 +1,7 @@
+## v0.3.0 (TBD)
+
+* Save encrypted values as Base64-encoded strings. (NOTE: This is a non-backward compatible change!)
+
 ## v0.2.0 (2012-11-24)
 
 * Rewrite token encryption to use OpenSSL's Cipher. (NOTE: This is a non-backward compatible change!)
