@@ -1,4 +1,4 @@
-## v0.3.0 (TBD)
+## v0.3.0 (2012-11-24)
 
 * Save encrypted values as Base64-encoded strings. (NOTE: This is a non-backward compatible change!)
 
