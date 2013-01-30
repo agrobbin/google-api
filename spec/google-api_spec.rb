@@ -3,7 +3,6 @@ require 'spec_helper'
 describe GoogleAPI do
 
   describe "#configure" do
-
     it "should raise an error when the CLIENT ID is blank" do
       expect {
         GoogleAPI.configure do |config|
@@ -88,32 +87,25 @@ describe GoogleAPI do
         config.encryption_key = 'encryption key'
       end
     end
-
   end
 
   describe "#discovered_apis" do
+    subject { GoogleAPI.discovered_apis }
 
-    it "should start as an empty hash" do
-      GoogleAPI.discovered_apis.should == {}
+    it { should be_an_instance_of(Hash) }
+    it { should be_empty }
+
+    context "when a new api is cached" do
+      before { GoogleAPI.discovered_apis[:test_api1] = {a: 1, b: 2, c: 3} }
+
+      its([:test_api1]) { should == {a: 1, b: 2, c: 3} }
     end
-
-    it "should keep a cache of discovered APIs" do
-      GoogleAPI.discovered_apis[:test_api1] = {a: 1, b: 2, c: 3}
-
-      GoogleAPI.discovered_apis[:test_api1].should == {a: 1, b: 2, c: 3}
-    end
-
   end
 
   describe "#stdout_logger" do
+    subject { GoogleAPI.stdout_logger }
 
-    let(:logger) { GoogleAPI.stdout_logger }
-
-    it "should create a new Logger object" do
-      logger = GoogleAPI.stdout_logger
-      logger.should be_an_instance_of(Logger)
-    end
-
+    it { should be_an_instance_of(Logger) }
   end
 
 end

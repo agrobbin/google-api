@@ -13,5 +13,5 @@ Faraday.default_adapter = :test
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
-  config.after(:each) { GoogleAPI.reset_environment! }
+  config.after { GoogleAPI.reset_environment! }
 end
