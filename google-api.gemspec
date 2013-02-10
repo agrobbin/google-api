@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "google-api"
   gem.require_paths = ["lib"]
-  gem.version       = "0.3.0"
+  gem.version       = "0.4.0"
 
   gem.add_runtime_dependency 'mime-types', '~> 1.0'
   gem.add_runtime_dependency 'oauth2', '~> 0.9.0'

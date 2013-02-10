@@ -1,3 +1,7 @@
+## v0.4.0 (2013-02-10)
+
+* Bump dependency of OAuth2 to 0.9.x.
+
 ## v0.3.0 (2012-11-24)
 
 * Save encrypted values as Base64-encoded strings. (NOTE: This is a non-backward compatible change!)
