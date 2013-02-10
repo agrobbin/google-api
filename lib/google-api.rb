@@ -1,6 +1,5 @@
 require 'mime/types'
 require 'oauth2'
-require 'google-api/oauth2'
 require 'google-api/api'
 require 'google-api/client'
 require 'google-api/encrypter'

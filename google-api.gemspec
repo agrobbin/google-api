@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.version       = "0.3.0"
 
   gem.add_runtime_dependency 'mime-types', '~> 1.0'
-  gem.add_runtime_dependency 'oauth2', '~> 0.8.0'
+  gem.add_runtime_dependency 'oauth2', '~> 0.9.0'
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
