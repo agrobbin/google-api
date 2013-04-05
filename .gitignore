@@ -1,7 +1,8 @@
 *.gem
 .bundle
 .DS_Store
-.rvmrc
+.ruby-gemset
+.ruby-version
 Gemfile.lock
 coverage/
 pkg/*
